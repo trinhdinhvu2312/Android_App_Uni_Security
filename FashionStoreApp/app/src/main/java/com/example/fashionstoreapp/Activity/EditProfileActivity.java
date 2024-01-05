@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.UserAPI;
+import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.example.fashionstoreapp.Somethings.RealPathUtil;
 
@@ -81,11 +82,23 @@ public class EditProfileActivity extends AppCompatActivity {
                 tvError.setText("Please enter your address!");
                 return;
             }
+
+//            String email1 = user.getEmail();
+//            String decryptEmail1 = AESEncryption.decrypt(email1, user.getId() );
+
             user = ObjectSharedPreferences.getSavedObjectFromPreference(EditProfileActivity.this, "User", "MODE_PRIVATE", User.class);
             RequestBody userId = RequestBody.create(user.getId(),MediaType.parse("multipart/form-data"));
             RequestBody fullName = RequestBody.create(etFullName.getText().toString(), MediaType.parse("multipart/form-data"));
-            RequestBody email = RequestBody.create(etEmail.getText().toString(), MediaType.parse("multipart/form-data"));
-            RequestBody phoneNumber = RequestBody.create(etPhoneNumber.getText().toString(), MediaType.parse("multipart/form-data"));
+
+            String email1 = etEmail.getText().toString();
+            String encryptEmail1 = AESEncryption.encrypt(email1, user.getId() );
+
+            RequestBody email = RequestBody.create(encryptEmail1 , MediaType.parse("multipart/form-data"));
+
+
+            String phone1 = etPhoneNumber.getText().toString();
+            String encryptPhone1 = AESEncryption.encrypt(phone1, user.getId() );
+            RequestBody phoneNumber = RequestBody.create(encryptPhone1, MediaType.parse("multipart/form-data"));
             RequestBody address = RequestBody.create(etAddress.getText().toString(), MediaType.parse("multipart/form-data"));
             MultipartBody.Part avatar = null;
             if(mUri!=null){
@@ -140,10 +153,18 @@ public class EditProfileActivity extends AppCompatActivity {
     private void LoadData() {
         user = ObjectSharedPreferences.getSavedObjectFromPreference(EditProfileActivity.this, "User", "MODE_PRIVATE", User.class);
         etFullName.setText(user.getUser_Name());
-        etEmail.setText(user.getEmail());
+//        etEmail.setText(user.getEmail());
+        String email1 = user.getEmail();
+        String decryptEmail = AESEncryption.decrypt(email1, user.getId() );
+        etEmail.setText(decryptEmail);
+
         Glide.with(getApplicationContext()).load(user.getAvatar()).into(ivAvatar);
         if (user.getPhone_Number()!=null){
-            etPhoneNumber.setText(user.getPhone_Number());
+            //etPhoneNumber.setText(user.getPhone_Number());
+            String phone1 = user.getPhone_Number();
+            String decryptPhone = AESEncryption.decrypt(phone1, user.getId() );
+            etPhoneNumber.setText(decryptPhone);
+
         }
         if(user.getAddress()!=null){
             etAddress.setText(user.getAddress());

@@ -28,6 +28,7 @@ import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.CartAPI;
 import com.example.fashionstoreapp.Retrofit.OrderAPI;
+import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.example.fashionstoreapp.Somethings.PhoneNumberUtils;
 import com.example.fashionstoreapp.Zalo.Api.CreateOrder;
@@ -156,7 +157,11 @@ public class CheckOutActivity extends AppCompatActivity {
             Toast.makeText(CheckOutActivity.this.getApplicationContext(), "Please add your address before place order", Toast.LENGTH_SHORT).show();
         } else {
             User user = ObjectSharedPreferences.getSavedObjectFromPreference(CheckOutActivity.this, "User", "MODE_PRIVATE", User.class);
-            OrderAPI.orderAPI.placeOrder(user.getId(), tvUserName.getText().toString(), tvPhoneNumber.getText().toString().replace("(", "").replace(")", ""), tvAddress.getText().toString(), method).enqueue(new Callback<Order>() {
+            String phoneNumber1 = tvPhoneNumber.getText().toString();
+            String encryptPhone = AESEncryption.encrypt(phoneNumber1, address.getAddress() );
+            //String phone2 = encryptPhone.setText("("+encryptPhone+")");
+
+            OrderAPI.orderAPI.placeOrder(user.getId(), tvUserName.getText().toString(), encryptPhone.replace("(", "").replace(")", ""), tvAddress.getText().toString(), method).enqueue(new Callback<Order>() {
                 @Override
                 public void onResponse(Call<Order> call, Response<Order> response) {
                     Order order = response.body();
@@ -238,10 +243,17 @@ public class CheckOutActivity extends AppCompatActivity {
             constraintLayoutAddress.setVisibility(View.GONE);
             constraintLayoutNotAddress.setVisibility(View.VISIBLE);
         } else {
-            //tvPhoneNumber.setText("(" + address.getPhoneNumber() + ")");
-            String phoneNumber = address.getPhoneNumber();
-            String maskedPhoneNumber = PhoneNumberUtils.maskPhoneNumber(phoneNumber);
-            tvPhoneNumber.setText("("+ maskedPhoneNumber+")");
+
+            tvPhoneNumber.setText("(" + address.getPhoneNumber() + ")");
+
+//            String phoneNumber1 = address.getPhoneNumber();
+//            String encryptPhone = AESEncryption.encrypt(phoneNumber1, address.getAddress() );
+//            tvPhoneNumber.setText("("+encryptPhone+")");
+
+
+//            String phoneNumber = address.getPhoneNumber();
+//            String maskedPhoneNumber = PhoneNumberUtils.maskPhoneNumber(phoneNumber);
+//            tvPhoneNumber.setText("("+ maskedPhoneNumber+")");
 
 
             tvUserName.setText(address.getFullName());

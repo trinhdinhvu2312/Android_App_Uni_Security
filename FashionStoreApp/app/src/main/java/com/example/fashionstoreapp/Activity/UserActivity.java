@@ -1,5 +1,7 @@
 package com.example.fashionstoreapp.Activity;
 
+import static com.example.fashionstoreapp.Somethings.AESEncryption.decrypt;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +23,7 @@ import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.UserAPI;
+import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.example.fashionstoreapp.Somethings.PhoneNumberUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,7 +44,7 @@ public class UserActivity extends AppCompatActivity {
 
     Button btnEditProfile, btnLogout;
 
-    TextView tvFullName, tvId, tvTotalOrder, tvTotalPrice, tvChangePassword, tvEmail, tvPhone, tvAddress;
+    TextView tvFullName, tvId, tvTotalOrder, tvTotalPrice, tvChangePassword, tvEmail, tvEmail1, tvPhone, tvAddress;
 
     User user;
 
@@ -164,16 +167,27 @@ public class UserActivity extends AppCompatActivity {
                 tvTotalPrice.setText(en.format(totalPrice));
 
                 tvAddress.setText(user.getAddress());
-                //tvEmail.setText(user.getEmail());
+
+
+
+
+//                String email = user.getEmail();
+//                String maskedEmail = PhoneNumberUtils.maskEmail(email);
+//                tvEmail.setText(maskedEmail);
+
 
                 String email = user.getEmail();
-                String maskedEmail = PhoneNumberUtils.maskEmail(email);
+                String decryptEmail = AESEncryption.decrypt(email, user.getId() );
+                String maskedEmail = PhoneNumberUtils.maskEmail(decryptEmail);
                 tvEmail.setText(maskedEmail);
+
+
 
 
                 //tvPhone.setText(user.getPhone_Number());
 
-                String phoneNumber = user.getPhone_Number();
+                String phoneNumber1 = user.getPhone_Number();
+                String phoneNumber = AESEncryption.decrypt(phoneNumber1, user.getId() );
                 if(phoneNumber != null){
                     String maskedPhoneNumber = PhoneNumberUtils.maskPhoneNumber(phoneNumber);
                     tvPhone.setText(maskedPhoneNumber);

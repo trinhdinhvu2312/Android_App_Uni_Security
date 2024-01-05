@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.PhoneNumberUtils;
 import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.R;
@@ -74,10 +75,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
                     holder.tvTotalItem.setText(order.getOrder_Item().size()+" Item");
                 holder.tvFullName.setText(order.getFullname());
                 //holder.tvPhoneNumber.setText(order.getPhone());
+//giải max
+                String phoneNumber1 = order.getPhone();
+                String phoneNumber = AESEncryption.decrypt(phoneNumber1, order.getAddress() );
+                holder.tvPhoneNumber.setText(phoneNumber);
 
-                String phoneNumber = order.getPhone();
-                String maskedPhoneNumber = PhoneNumberUtils.maskPhoneNumber(phoneNumber);
-                holder.tvPhoneNumber.setText(maskedPhoneNumber);
+
+
+
+
+
+//                String maskedPhoneNumber = PhoneNumberUtils.maskPhoneNumber(phoneNumber);
+//                holder.tvPhoneNumber.setText(maskedPhoneNumber);
 
 
                 holder.tvAddress.setText(order.getAddress());

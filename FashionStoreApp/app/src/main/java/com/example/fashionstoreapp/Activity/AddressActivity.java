@@ -1,8 +1,10 @@
 package com.example.fashionstoreapp.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Display;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fashionstoreapp.Model.Address;
 import com.example.fashionstoreapp.R;
+import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 public class AddressActivity extends AppCompatActivity {
@@ -47,6 +50,9 @@ public class AddressActivity extends AppCompatActivity {
                 etAddress.requestFocus();
                 return;
             }
+//            String phone1 = etPhoneNumber.getText().toString();
+//            String encryptPhoneNumber = AESEncryption.encrypt(phone1, String.valueOf( etFullName ) );
+
             Address address = new Address(etFullName.getText().toString(), etPhoneNumber.getText().toString(), etAddress.getText().toString());
             ObjectSharedPreferences.saveObjectToSharedPreference(AddressActivity.this, "address", "MODE_PRIVATE", address);
             startActivity(new Intent(AddressActivity.this, CheckOutActivity.class));
@@ -58,7 +64,11 @@ public class AddressActivity extends AppCompatActivity {
         Address address = ObjectSharedPreferences.getSavedObjectFromPreference(AddressActivity.this, "address", "MODE_PRIVATE", Address.class);
         if(address != null){
             etFullName.setText(address.getFullName());
+
             etPhoneNumber.setText(address.getPhoneNumber());
+//            String phone1 = address.getPhoneNumber();
+//            String decryptPhone = AESEncryption.decrypt(phone1, address.getFullName() );
+//            etPhoneNumber.setText(decryptPhone);
 
             etAddress.setText(address.getAddress());
         }
