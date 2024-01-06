@@ -66,13 +66,13 @@
                                 Account
                             </div>
                             <ul>
-                                <li><a th:href="@{/dashboard}"><i
+                                <li><a th:href="@{/api/admin/dashboard}"><i
                                         class="sl sl-icon-settings"></i> Dashboard</a></li>
-                                <li><a th:href="@{/dashboard-orders}"><i
+                                <li><a th:href="@{/api/admin/dashboard-orders}"><i
                                         class="sl sl-icon-envelope-open"></i> Orders</a></li>
-                                <li><a th:href="@{/dashboard-wallet}"><i
+                                <li><a th:href="@{/api/admin/dashboard-wallet}"><i
                                         class="fa fa-calendar-check-o"></i> Wallet</a></li>
-                                <li><a th:href="@{/logout-admin}"><i
+                                <li><a th:href="@{/api/admin/logout-admin}"><i
                                         class="sl sl-icon-power"></i> Logout</a></li>
                             </ul>
                         </div>
@@ -104,176 +104,174 @@
         <div class="dashboard-nav">
             <div class="dashboard-nav-inner">
                 <ul data-submenu-title="Main">
-                    <li class="active"><a th:href="@{/dashboard}"><i
+                    <li class="active"><a th:href="@{/api/admin/dashboard}"><i
                             class="sl sl-icon-settings"></i> Dashboard</a></li>
-                    <li><a th:href="@{/dashboard-orders}"><i
+                    <li><a th:href="@{/api/admin/dashboard-orders}"><i
                             class="fa fa-calendar-check-o"></i> Orders</a></li>
-                    <li><a th:href="@{/dashboard-wallet}"><i
+                    <li><a th:href="@{/api/admin/dashboard-wallet}"><i
                             class="sl sl-icon-wallet"></i> Wallet</a></li>
                 </ul>
                 <ul data-submenu-title="Categories">
-                    <li><a th:href="@{/dashboard-category}"><i
+                    <li><a th:href="@{/api/admin/dashboard-category}"><i
                             class="sl sl-icon-grid"></i> Category</a></li>
-                    <li><a th:href="@{/dashboard-addcategory}"><i
+                    <li><a th:href="@{/api/admin/dashboard-addcategory}"><i
                             class="sl sl-icon-plus"></i> Add Category</a></li>
                 </ul>
                 <ul data-submenu-title="Products">
-                    <li><a th:href="@{/dashboard-product}"><i
+                    <li><a th:href="@{/api/admin/dashboard-product}"><i
                             class="sl sl-icon-layers"></i> Product</a></li>
-                    <li><a th:href="@{/dashboard-addproduct}"><i
+                    <li><a th:href="@{/api/admin/dashboard-addproduct}"><i
                             class="sl sl-icon-plus"></i> Add Product</a></li>
                 </ul>
                 <ul data-submenu-title="Users">
-                    <li><a th:href="@{/dashboard-user}"><i
+                    <li><a th:href="@{/api/admin/dashboard-user}"><i
                             class="sl sl-icon-user"></i> User</a></li>
-                    <li><a th:href="@{/logout-admin}"><i
+                    <li><a th:href="@{/api/admin/logout-admin}"><i
                             class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
             </div>
         </div>
         <!-- Navigation / End -->
-        <!-- Navigation / End -->
-
-		<!-- Content
+        <!-- Content
     ================================================== -->
 
-		<div class="dashboard-content">
-			<form action="dashboard-addproduct" method="post"
-				  enctype="multipart/form-data">
-				<!-- Titlebar -->
-				<div id="titlebar">
-					<div class="row">
-						<div class="col-md-12">
-							<h2>Add Product</h2>
-							<!-- Breadcrumbs -->
-							<nav id="breadcrumbs">
-								<ul>
-									<li><a href="#">Home</a></li>
-									<li><a href="#">Dashboard</a></li>
-									<li>Add Product</li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				</div>
+        <div class="dashboard-content">
+            <form action="/api/admin/dashboard-addproduct" method="post"
+                  enctype="multipart/form-data">
+                <!-- Titlebar -->
+                <div id="titlebar">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Add Product</h2>
+                            <!-- Breadcrumbs -->
+                            <nav id="breadcrumbs">
+                                <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">Dashboard</a></li>
+                                    <li>Add Product</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="row">
-					<div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
 
-						<div id="add-listing">
+                        <div id="add-listing">
 
-							<!-- Section -->
-							<div class="add-listing-section">
+                            <!-- Section -->
+                            <div class="add-listing-section">
 
-								<!-- Headline -->
-								<div class="add-listing-headline">
-									<h3>
-										<i class="sl sl-icon-doc"></i> Basic Informations
-									</h3>
-								</div>
+                                <!-- Headline -->
+                                <div class="add-listing-headline">
+                                    <h3>
+                                        <i class="sl sl-icon-doc"></i> Basic Informations
+                                    </h3>
+                                </div>
 
-								<!-- Title -->
-								<div class="row with-forms">
-									<div class="col-md-12">
-										<h5>Product Name</h5>
-										<input name="product_name" class="search-field" type="text"
-											   value="" placeholder="Product Name" />
-									</div>
-								</div>
+                                <!-- Title -->
+                                <div class="row with-forms">
+                                    <div class="col-md-12">
+                                        <h5>Product Name</h5>
+                                        <input name="product_name" class="search-field" type="text"
+                                               value="" placeholder="Product Name"/>
+                                    </div>
+                                </div>
 
-								<!-- Row -->
-								<div class="row with-forms">
-									<!-- Price -->
-									<div class="col-md-4">
-										<h5>Price</h5>
-										<input name="price" type="text" placeholder="Price">
-									</div>
+                                <!-- Row -->
+                                <div class="row with-forms">
+                                    <!-- Price -->
+                                    <div class="col-md-4">
+                                        <h5>Price</h5>
+                                        <input name="price" type="text" placeholder="Price">
+                                    </div>
 
-									<div class="col-md-4">
-										<h5>Availability</h5>
-										<input name="availability" type="text"
-											   placeholder="Availability">
-									</div>
-									<!-- Status -->
-									<div class="col-md-4">
-										<h5>Category</h5>
-										<select name="category" class="chosen-select-no-single">
-											<option value="1" label="blank"
-													th:text="${listCategories[0].category_Name}"></option>
-											<th:block th:each="y : ${listCategories}">
-												<option th:value="${y.id}" th:if="${yStat.index >0}"
-														th:text="${y.category_Name}"></option>
-											</th:block>
-										</select>
-									</div>
+                                    <div class="col-md-4">
+                                        <h5>Availability</h5>
+                                        <input name="availability" type="text"
+                                               placeholder="Availability">
+                                    </div>
+                                    <!-- Status -->
+                                    <div class="col-md-4">
+                                        <h5>Category</h5>
+                                        <select name="category" class="chosen-select-no-single">
+                                            <option value="1" label="blank"
+                                                    th:text="${listCategories[0].category_Name}"></option>
+                                            <th:block th:each="y : ${listCategories}">
+                                                <option th:value="${y.id}" th:if="${yStat.index >0}"
+                                                        th:text="${y.category_Name}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
 
-								</div>
-								<!-- Row / End -->
+                                </div>
+                                <!-- Row / End -->
 
-							</div>
-							<!-- Section / End -->
+                            </div>
+                            <!-- Section / End -->
 
-							<!-- Section -->
-							<div class="add-listing-section margin-top-45">
+                            <!-- Section -->
+                            <div class="add-listing-section margin-top-45">
 
-								<!-- Headline -->
-								<div class="add-listing-headline">
-									<h3>
-										<i class="sl sl-icon-docs"></i> Details
-									</h3>
-								</div>
+                                <!-- Headline -->
+                                <div class="add-listing-headline">
+                                    <h3>
+                                        <i class="sl sl-icon-docs"></i> Details
+                                    </h3>
+                                </div>
 
-								<!-- Description -->
-								<div class="form">
-									<h5>Description</h5>
-									<textarea name="description" class="WYSIWYG" cols="40"
-											  rows="3" id="summary" spellcheck="true"
-											  placeholder="Description"></textarea>
-								</div>
-							</div>
-							<!-- Section / End -->
+                                <!-- Description -->
+                                <div class="form">
+                                    <h5>Description</h5>
+                                    <textarea name="description" class="WYSIWYG" cols="40"
+                                              rows="3" id="summary" spellcheck="true"
+                                              placeholder="Description"></textarea>
+                                </div>
+                            </div>
+                            <!-- Section / End -->
 
-							<!-- Section -->
-							<div class="add-listing-section margin-top-45">
+                            <!-- Section -->
+                            <div class="add-listing-section margin-top-45">
 
-								<!-- Headline -->
-								<div class="add-listing-headline">
-									<h3>
-										<i class="sl sl-icon-picture"></i> Images
-									</h3>
-								</div>
+                                <!-- Headline -->
+                                <div class="add-listing-headline">
+                                    <h3>
+                                        <i class="sl sl-icon-picture"></i> Images
+                                    </h3>
+                                </div>
 
-								<!-- Dropzone -->
-								<div class="submit-section">
+                                <!-- Dropzone -->
+                                <div class="submit-section">
 
-									<div class="upload__box">
-										<div class="upload__btn-box">
-											<label class="upload__btn">
-												<p style="margin-bottom: 0px;">Choose images</p> <input
-													name="listImage" accept="image/*" type="file"
-													data-max_length="20" class="upload__inputfile" multiple>
-											</label>
-										</div>
-										<div class="upload__img-wrap"></div>
-									</div>
-								</div>
-							</div>
-							<!-- Section / End -->
-							<button class="button preview">
-								Add New Product <i class="fa fa-arrow-circle-right"></i>
-							</button>
-						</div>
-					</div>
+                                    <div class="upload__box">
+                                        <div class="upload__btn-box">
+                                            <label class="upload__btn">
+                                                <p style="margin-bottom: 0px;">Choose images</p> <input
+                                                    name="listImage" accept="image/*" type="file"
+                                                    data-max_length="20" class="upload__inputfile" multiple>
+                                            </label>
+                                        </div>
+                                        <div class="upload__img-wrap"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Section / End -->
+                            <button class="button preview">
+                                Add New Product <i class="fa fa-arrow-circle-right"></i>
+                            </button>
+                        </div>
+                    </div>
 
-					<!-- Copyrights -->
-					<div class="col-md-12">
-						<div class="copyrights"></div>
-					</div>
+                    <!-- Copyrights -->
+                    <div class="col-md-12">
+                        <div class="copyrights"></div>
+                    </div>
 
-				</div>
-			</form>
-		</div>
-		<!-- Content / End -->
+                </div>
+            </form>
+        </div>
+        <!-- Content / End -->
 
 
     </div>
@@ -304,36 +302,36 @@
 <script src="/scripts/moment.min.js"></script>
 <!-- Opening hours added via JS (this is only for demo purpose) -->
 <script>
-	$(".opening-day.js-demo-hours .chosen-select").each(
-			function() {
-				$(this).append(
-						'' + '<option></option>'
-						+ '<option>Closed</option>'
-						+ '<option>1 AM</option>'
-						+ '<option>2 AM</option>'
-						+ '<option>3 AM</option>'
-						+ '<option>4 AM</option>'
-						+ '<option>5 AM</option>'
-						+ '<option>6 AM</option>'
-						+ '<option>7 AM</option>'
-						+ '<option>8 AM</option>'
-						+ '<option>9 AM</option>'
-						+ '<option>10 AM</option>'
-						+ '<option>11 AM</option>'
-						+ '<option>12 AM</option>'
-						+ '<option>1 PM</option>'
-						+ '<option>2 PM</option>'
-						+ '<option>3 PM</option>'
-						+ '<option>4 PM</option>'
-						+ '<option>5 PM</option>'
-						+ '<option>6 PM</option>'
-						+ '<option>7 PM</option>'
-						+ '<option>8 PM</option>'
-						+ '<option>9 PM</option>'
-						+ '<option>10 PM</option>'
-						+ '<option>11 PM</option>'
-						+ '<option>12 PM</option>');
-			});
+    $(".opening-day.js-demo-hours .chosen-select").each(
+        function () {
+            $(this).append(
+                '' + '<option></option>'
+                + '<option>Closed</option>'
+                + '<option>1 AM</option>'
+                + '<option>2 AM</option>'
+                + '<option>3 AM</option>'
+                + '<option>4 AM</option>'
+                + '<option>5 AM</option>'
+                + '<option>6 AM</option>'
+                + '<option>7 AM</option>'
+                + '<option>8 AM</option>'
+                + '<option>9 AM</option>'
+                + '<option>10 AM</option>'
+                + '<option>11 AM</option>'
+                + '<option>12 AM</option>'
+                + '<option>1 PM</option>'
+                + '<option>2 PM</option>'
+                + '<option>3 PM</option>'
+                + '<option>4 PM</option>'
+                + '<option>5 PM</option>'
+                + '<option>6 PM</option>'
+                + '<option>7 PM</option>'
+                + '<option>8 PM</option>'
+                + '<option>9 PM</option>'
+                + '<option>10 PM</option>'
+                + '<option>11 PM</option>'
+                + '<option>12 PM</option>');
+        });
 </script>
 
 <!-- DropZone | Documentation: http://dropzonejs.com -->
@@ -341,91 +339,91 @@
 
 
 <script>
-	jQuery(document).ready(function() {
-		ImgUpload();
-	});
+    jQuery(document).ready(function () {
+        ImgUpload();
+    });
 
-	function ImgUpload() {
-		var imgWrap = "";
-		var imgArray = [];
+    function ImgUpload() {
+        var imgWrap = "";
+        var imgArray = [];
 
-		$('.upload__inputfile')
-				.each(
-						function() {
-							$(this)
-									.on(
-											'change',
-											function(e) {
-												imgWrap = $(this)
-														.closest(
-																'.upload__box')
-														.find(
-																'.upload__img-wrap');
-												var maxLength = $(this)
-														.attr(
-																'data-max_length');
+        $('.upload__inputfile')
+            .each(
+                function () {
+                    $(this)
+                        .on(
+                            'change',
+                            function (e) {
+                                imgWrap = $(this)
+                                    .closest(
+                                        '.upload__box')
+                                    .find(
+                                        '.upload__img-wrap');
+                                var maxLength = $(this)
+                                    .attr(
+                                        'data-max_length');
 
-												var files = e.target.files;
-												var filesArr = Array.prototype.slice
-														.call(files);
-												var iterator = 0;
-												filesArr
-														.forEach(function(
-																f, index) {
+                                var files = e.target.files;
+                                var filesArr = Array.prototype.slice
+                                    .call(files);
+                                var iterator = 0;
+                                filesArr
+                                    .forEach(function (
+                                        f, index) {
 
-															if (!f.type
-																	.match('image.*')) {
-																return;
-															}
+                                        if (!f.type
+                                            .match('image.*')) {
+                                            return;
+                                        }
 
-															if (imgArray.length > maxLength) {
-																return false
-															} else {
-																var len = 0;
-																for (var i = 0; i < imgArray.length; i++) {
-																	if (imgArray[i] !== undefined) {
-																		len++;
-																	}
-																}
-																if (len > maxLength) {
-																	return false;
-																} else {
-																	imgArray
-																			.push(f);
+                                        if (imgArray.length > maxLength) {
+                                            return false
+                                        } else {
+                                            var len = 0;
+                                            for (var i = 0; i < imgArray.length; i++) {
+                                                if (imgArray[i] !== undefined) {
+                                                    len++;
+                                                }
+                                            }
+                                            if (len > maxLength) {
+                                                return false;
+                                            } else {
+                                                imgArray
+                                                    .push(f);
 
-																	var reader = new FileReader();
-																	reader.onload = function(
-																			e) {
-																		var html = "<div class='upload__img-box'><div style='background-image: url("
-																				+ e.target.result
-																				+ ")' data-number='"
-																				+ $(".upload__img-close").length
-																				+ "' data-file='"
-																				+ f.name
-																				+ "' class='img-bg'><div class='upload__img-close'></div></div></div>";
-																		imgWrap
-																				.append(html);
-																		iterator++;
-																	}
-																	reader
-																			.readAsDataURL(f);
-																}
-															}
-														});
-											});
-						});
+                                                var reader = new FileReader();
+                                                reader.onload = function (
+                                                    e) {
+                                                    var html = "<div class='upload__img-box'><div style='background-image: url("
+                                                        + e.target.result
+                                                        + ")' data-number='"
+                                                        + $(".upload__img-close").length
+                                                        + "' data-file='"
+                                                        + f.name
+                                                        + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                                                    imgWrap
+                                                        .append(html);
+                                                    iterator++;
+                                                }
+                                                reader
+                                                    .readAsDataURL(f);
+                                            }
+                                        }
+                                    });
+                            });
+                });
 
-		$('body').on('click', ".upload__img-close", function(e) {
-			var file = $(this).parent().data("file");
-			for (var i = 0; i < imgArray.length; i++) {
-				if (imgArray[i].name === file) {
-					imgArray.splice(i, 1);
-					break;
-				}
-			}
-			$(this).parent().parent().remove();
-		});
-	}
+        $('body').on('click', ".upload__img-close", function (e) {
+            var file = $(this).parent().data("file");
+            for (var i = 0; i < imgArray.length; i++) {
+                if (imgArray[i].name === file) {
+                    imgArray.splice(i, 1);
+                    break;
+                }
+            }
+            $(this).parent().parent().remove();
+        });
+    }
 </script>
 </body>
 </html>

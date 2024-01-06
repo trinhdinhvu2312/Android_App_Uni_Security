@@ -16,11 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import StoreApp.StoreApp.entity.Category;
@@ -41,6 +37,7 @@ import StoreApp.StoreApp.service.UserService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/api/admin")
 public class AdminController {
     @Autowired
     OrderService orderService;
@@ -84,16 +81,16 @@ public class AdminController {
         System.out.println(admin);
         if (admin == null) {
             session.setAttribute("err_sign_admin", "Username or Password is not correct!");
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             String decodedValue = new String(Base64.getDecoder().decode(admin.getPassword()));
             if (!decodedValue.equals(pass)) {
                 session.setAttribute("err_sign_admin", "Username or Password is not correct!");
-                return "redirect:/signin-admin";
+                return "redirect:/api/admin/signin-admin";
             } else {
                 System.out.println(admin);
                 session.setAttribute("admin", admin);
-                return "redirect:/dashboard";
+                return "redirect:/api/admin/dashboard";
             }
         }
     }
@@ -101,7 +98,7 @@ public class AdminController {
     @GetMapping("/logout-admin")
     public String LogOutAdmin(Model model) {
         session.setAttribute("admin", null);
-        return "redirect:/signin-admin";
+        return "redirect:/api/admin/signin-admin";
     }
 
     @GetMapping("/dashboard")
@@ -109,7 +106,7 @@ public class AdminController {
         User admin = (User) session.getAttribute("admin");
         System.out.println("======");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             List<Order> listOrder = orderService.findAll();
             List<Product> listProduct = productService.getAllProduct();
@@ -137,7 +134,7 @@ public class AdminController {
     public String DashboardOrderView(Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Pageable pageable = PageRequest.of(0, 3);
             Page<Order> pageOrder = orderService.findAll(pageable);
@@ -150,7 +147,7 @@ public class AdminController {
     public String DashboardOrderPageView(@PathVariable int page, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Pageable pageable = PageRequest.of(page, 3);
             Page<Order> pageOrder = orderService.findAll(pageable);
@@ -166,7 +163,7 @@ public class AdminController {
         System.out.println(message);
         System.out.println(email);
         Mail mail = new Mail();
-        mail.setMailFrom("haovo1512@gmail.com");
+        mail.setMailFrom("trinhdinhvu2312@gmail.com");
         mail.setMailTo(email);
         mail.setMailSubject("This is message from Male fashion.");
         mail.setMailContent(message);
@@ -197,7 +194,7 @@ public class AdminController {
     public String DashboardWalletView(Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             List<Order> listOrder = orderService.findAll();
             List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Pay with ZaloPay");
@@ -221,7 +218,7 @@ public class AdminController {
     public String DashboardProductView(Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             List<Category> listCategories = categoryService.findAll();
             Pageable pageable = PageRequest.of(0, 3);
@@ -236,7 +233,7 @@ public class AdminController {
     public String DashboardCategoryView(Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Pageable pageable = PageRequest.of(0, 5);
             Page<Category> pageCategory = categoryService.findAllPageAble(pageable);
@@ -249,7 +246,7 @@ public class AdminController {
     public String DashboardMyProductPageView(@PathVariable int page, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             List<Category> listCategories = categoryService.findAll();
             Pageable pageable = PageRequest.of(page, 3);
@@ -264,7 +261,7 @@ public class AdminController {
     public String DashboardMyCategoryPageView(@PathVariable int page, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Pageable pageable = PageRequest.of(page, 5);
             Page<Category> pageCategory = categoryService.findAllPageAble(pageable);
@@ -278,7 +275,7 @@ public class AdminController {
                                          @ModelAttribute("category-selected") int category_selected, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Page<Product> pageProduct = null;
             Pageable pageable = PageRequest.of(0, 3);
@@ -315,7 +312,7 @@ public class AdminController {
     public String DashboardProductSearch(@ModelAttribute("search-input") String search_input, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Page<Category> pageCategory = null;
             Pageable pageable = PageRequest.of(0, 3);
@@ -333,7 +330,7 @@ public class AdminController {
     public String DashboardProductSearchPage(@PathVariable int page, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             String search_input = (String) session.getAttribute("search_input_dashboard");
             int category_selected = (int) session.getAttribute("category_selected");
@@ -361,7 +358,7 @@ public class AdminController {
     public String DashboardCategorySearchPage(@PathVariable int page, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             String search_input = (String) session.getAttribute("search_input_dashboard");
             Page<Category> pageCategory = null;
@@ -379,7 +376,7 @@ public class AdminController {
     public String DashboardMyProductEditView(@PathVariable int id, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             List<Category> listCategories = categoryService.findAll();
             Product product = productService.getProductById(id);
@@ -400,7 +397,7 @@ public class AdminController {
             throws Exception {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             if (listImage != null) {
                 Category cate = categoryService.getCategoryById(category);
@@ -425,9 +422,9 @@ public class AdminController {
                     }
                 }
                 session.setAttribute("editProduct", "editProductSuccess");
-                return "redirect:/dashboard-product";
+                return "redirect:/api/admin/dashboard-product";
             } else {
-                return "redirect:/dashboard-product/edit/" + product_id;
+                return "redirect:/api/admin/dashboard-product/edit/" + product_id;
             }
 
         }
@@ -437,7 +434,7 @@ public class AdminController {
     public String DashboardMyCategoryEditView(@PathVariable int id, Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Category category = categoryService.getCategoryById(id);
             model.addAttribute("category", category);
@@ -454,14 +451,14 @@ public class AdminController {
             throws Exception {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Category category = categoryService.getCategoryById(category_id);
             category.setCategory_Name(category_name);
             category.setCategory_Image(null);
             categoryService.saveCategory(category);
             session.setAttribute("editCategory", "editCategorySuccess");
-            return "redirect:/dashboard-category";
+            return "redirect:/api/admin/dashboard-category";
         }
     }
 
@@ -469,7 +466,7 @@ public class AdminController {
     public String DeleteProduct(@PathVariable int id, HttpServletRequest request) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             String referer = request.getHeader("Referer");
             productService.deleteProductById(id);
@@ -481,7 +478,7 @@ public class AdminController {
     public String DeleteCategoryById(@PathVariable int id, HttpServletRequest request) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             String referer = request.getHeader("Referer");
             categoryService.deleteCategoryById(id);
@@ -500,7 +497,7 @@ public class AdminController {
     public String DashboardAddProductView(Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             String addProduct = (String) session.getAttribute("addProduct");
             model.addAttribute("addProduct", addProduct);
@@ -515,7 +512,7 @@ public class AdminController {
     public String DashboardAddCategoryView(Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             String addCategory = (String) session.getAttribute("addCategory");
             model.addAttribute("addCategory", addCategory);
@@ -531,7 +528,7 @@ public class AdminController {
                                             @ModelAttribute("listImage") MultipartFile[] listImage) throws Exception {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             if (listImage != null) {
                 Category cate = categoryService.getCategoryById(category);
@@ -559,9 +556,9 @@ public class AdminController {
                     productImageService.save(img);
                 }
                 session.setAttribute("addProduct", "addProductSuccess");
-                return "redirect:/dashboard-product";
+                return "redirect:/api/admin/dashboard-product";
             } else {
-                return "redirect:/dashboard-addproduct";
+                return "dashboard-addproduct";
             }
 
         }
@@ -571,7 +568,7 @@ public class AdminController {
     public String DashboardAddCategoryHandel(Model model, @ModelAttribute("category_name") String category_name) throws Exception {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
-            return "redirect:/signin-admin";
+            return "redirect:/api/admin/signin-admin";
         } else {
             Category newcate = new Category();
             newcate.setCategory_Name(category_name);
@@ -580,7 +577,7 @@ public class AdminController {
             List<Category> listCategory = categoryService.findAll();
             newcate = listCategory.get(listCategory.size() - 1);
             session.setAttribute("addCategory", "addCategorySuccess");
-            return "redirect:/dashboard-category";
+            return "redirect:/api/admin/dashboard-category";
         }
     }
 

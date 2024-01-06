@@ -64,13 +64,13 @@
                                 Account
                             </div>
                             <ul>
-                                <li><a th:href="@{/dashboard}"><i
+                                <li><a th:href="@{/api/admin/dashboard}"><i
                                         class="sl sl-icon-settings"></i> Dashboard</a></li>
-                                <li><a th:href="@{/dashboard-orders}"><i
+                                <li><a th:href="@{/api/admin/dashboard-orders}"><i
                                         class="sl sl-icon-envelope-open"></i> Orders</a></li>
-                                <li><a th:href="@{/dashboard-wallet}"><i
+                                <li><a th:href="@{/api/admin/dashboard-wallet}"><i
                                         class="fa fa-calendar-check-o"></i> Wallet</a></li>
-                                <li><a th:href="@{/logout-admin}"><i
+                                <li><a th:href="@{/api/admin/logout-admin}"><i
                                         class="sl sl-icon-power"></i> Logout</a></li>
                             </ul>
                         </div>
@@ -102,29 +102,29 @@
         <div class="dashboard-nav">
             <div class="dashboard-nav-inner">
                 <ul data-submenu-title="Main">
-                    <li class="active"><a th:href="@{/dashboard}"><i
+                    <li class="active"><a th:href="@{/api/admin/dashboard}"><i
                             class="sl sl-icon-settings"></i> Dashboard</a></li>
-                    <li><a th:href="@{/dashboard-orders}"><i
+                    <li><a th:href="@{/api/admin/dashboard-orders}"><i
                             class="fa fa-calendar-check-o"></i> Orders</a></li>
-                    <li><a th:href="@{/dashboard-wallet}"><i
+                    <li><a th:href="@{/api/admin/dashboard-wallet}"><i
                             class="sl sl-icon-wallet"></i> Wallet</a></li>
                 </ul>
                 <ul data-submenu-title="Categories">
-                    <li><a th:href="@{/dashboard-category}"><i
+                    <li><a th:href="@{/api/admin/dashboard-category}"><i
                             class="sl sl-icon-grid"></i> Category</a></li>
-                    <li><a th:href="@{/dashboard-addcategory}"><i
+                    <li><a th:href="@{/api/admin/dashboard-addcategory}"><i
                             class="sl sl-icon-plus"></i> Add Category</a></li>
                 </ul>
                 <ul data-submenu-title="Products">
-                    <li><a th:href="@{/dashboard-product}"><i
+                    <li><a th:href="@{/api/admin/dashboard-product}"><i
                             class="sl sl-icon-layers"></i> Product</a></li>
-                    <li><a th:href="@{/dashboard-addproduct}"><i
+                    <li><a th:href="@{/api/admin/dashboard-addproduct}"><i
                             class="sl sl-icon-plus"></i> Add Product</a></li>
                 </ul>
                 <ul data-submenu-title="Users">
-                    <li><a th:href="@{/dashboard-user}"><i
+                    <li><a th:href="@{/api/admin/dashboard-user}"><i
                             class="sl sl-icon-user"></i> User</a></li>
-                    <li><a th:href="@{/logout-admin}"><i
+                    <li><a th:href="@{/api/admin/logout-admin}"><i
                             class="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
             </div>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <form action="/dashboard-category/search" method="Post">
+            <form action="/api/admin/dashboard-category/search" method="Post">
                 <div class="main-search-input"
                      style="margin-bottom: 30px; justify-content: space-between;">
 
@@ -185,9 +185,9 @@
                                         </div>
                                     </div>
                                     <div class="buttons-to-right">
-                                        <a th:href="@{/dashboard-category/edit/{id}(id=${y.id})}" class="button gray"><i class="sl sl-icon-note"></i> Edit</a>
+                                        <a th:href="@{/api/admin/dashboard-category/edit/{id}(id=${y.id})}" class="button gray"><i class="sl sl-icon-note"></i> Edit</a>
 
-                                        <a th:href="@{/dashboard-category/delete/{id}(id=${y.id})}" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
+                                        <a th:href="@{/api/admin/dashboard-category/delete/{id}(id=${y.id})}" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
                                     </div>
                                 </li>
                             </th:block>
@@ -204,14 +204,14 @@
                             <nav class="pagination">
                                 <ul>
                                     <li><a class="paging-item" th:if="${pageCategory.number} > 0"
-                                           th:href="@{/dashboard-category/{page}(page=${pageCategory.number - 1})}"><i
+                                           th:href="@{/api/admin/dashboard-category/{page}(page=${pageCategory.number - 1})}"><i
                                             class="sl sl-icon-arrow-left"></i></a></li>
                                     <li><a class="paging-item"
-                                           th:href="@{/dashboard-category/{page}(page=${pageCategory.number})}"
+                                           th:href="@{/api/admin/dashboard-category/{page}(page=${pageCategory.number})}"
                                            th:text="${pageCategory.number+1}"></a></li>
                                     <li><a class="paging-item"
                                            th:if="${pageCategory.number} < ${pageCategory.totalPages - 1}"
-                                           th:href="@{/dashboard-category/{page}(page=${pageCategory.number + 1})}"><i
+                                           th:href="@{/api/admin/dashboard-category/{page}(page=${pageCategory.number + 1})}"><i
                                             class="sl sl-icon-arrow-right"></i></a></li>
                                 </ul>
                             </nav>
@@ -224,14 +224,14 @@
                             <nav class="pagination">
                                 <ul>
                                     <li><a th:if="${pageCategory.number} > 0"
-                                           th:href="@{/dashboard-product/search/{page}(page=${pageCategory.number - 1})}"><i
+                                           th:href="@{/api/admin/dashboard-product/search/{page}(page=${pageCategory.number - 1})}"><i
                                             class="sl sl-icon-arrow-left"></i></a></li>
                                     <li><a
-                                            th:href="@{/dashboard-category/search/{page}(page=${pageCategory.number})}"
+                                            th:href="@{/api/admin/dashboard-category/search/{page}(page=${pageCategory.number})}"
                                             class="current-page" th:text="${pageProduct.number+1}"></a></li>
                                     <li><a
                                             th:if="${pageCategory.number} < ${pageCategory.totalPages - 1}"
-                                            th:href="@{/dashboard-category/search/{page}(page=${pageCategory.number + 1})}"><i
+                                            th:href="@{/api/admin/dashboard-category/search/{page}(page=${pageCategory.number + 1})}"><i
                                             class="sl sl-icon-arrow-right"></i></a></li>
                                 </ul>
                             </nav>

@@ -15,7 +15,11 @@ public interface UserService {
 	
 	User GetUserByEmail(String email);
 
+	User GetUserById(String Id);
+
 	User findByIdAndRole(String id, String role);
 
-	List<User> findAll();    
+	List<User> findAll();
+
+	User getUserDetailsFromToken(String token) throws Exception;
 }

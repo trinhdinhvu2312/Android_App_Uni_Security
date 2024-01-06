@@ -64,13 +64,13 @@
 									Account
 								</div>
 								<ul>
-									<li><a th:href="@{/dashboard}"><i
+									<li><a th:href="@{/api/admin/dashboard}"><i
 											class="sl sl-icon-settings"></i> Dashboard</a></li>
-									<li><a th:href="@{/dashboard-orders}"><i
+									<li><a th:href="@{/api/admin/dashboard-orders}"><i
 											class="sl sl-icon-envelope-open"></i> Orders</a></li>
-									<li><a th:href="@{/dashboard-wallet}"><i
+									<li><a th:href="@{/api/admin/dashboard-wallet}"><i
 											class="fa fa-calendar-check-o"></i> Wallet</a></li>
-									<li><a th:href="@{/logout-admin}"><i
+									<li><a th:href="@{/api/admin/logout-admin}"><i
 											class="sl sl-icon-power"></i> Logout</a></li>
 								</ul>
 							</div>
@@ -102,29 +102,29 @@
 			<div class="dashboard-nav">
 				<div class="dashboard-nav-inner">
 					<ul data-submenu-title="Main">
-						<li class="active"><a th:href="@{/dashboard}"><i
+						<li class="active"><a th:href="@{/api/admin/dashboard}"><i
 								class="sl sl-icon-settings"></i> Dashboard</a></li>
-						<li><a th:href="@{/dashboard-orders}"><i
+						<li><a th:href="@{/api/admin/dashboard-orders}"><i
 								class="fa fa-calendar-check-o"></i> Orders</a></li>
-						<li><a th:href="@{/dashboard-wallet}"><i
+						<li><a th:href="@{/api/admin/dashboard-wallet}"><i
 								class="sl sl-icon-wallet"></i> Wallet</a></li>
 					</ul>
 					<ul data-submenu-title="Categories">
-						<li><a th:href="@{/dashboard-category}"><i
+						<li><a th:href="@{/api/admin/dashboard-category}"><i
 								class="sl sl-icon-grid"></i> Category</a></li>
-						<li><a th:href="@{/dashboard-addcategory}"><i
+						<li><a th:href="@{/api/admin/dashboard-addcategory}"><i
 								class="sl sl-icon-plus"></i> Add Category</a></li>
 					</ul>
 					<ul data-submenu-title="Products">
-						<li><a th:href="@{/dashboard-product}"><i
+						<li><a th:href="@{/api/admin/dashboard-product}"><i
 								class="sl sl-icon-layers"></i> Product</a></li>
-						<li><a th:href="@{/dashboard-addproduct}"><i
+						<li><a th:href="@{/api/admin/dashboard-addproduct}"><i
 								class="sl sl-icon-plus"></i> Add Product</a></li>
 					</ul>
 					<ul data-submenu-title="Users">
-						<li><a th:href="@{/dashboard-user}"><i
+						<li><a th:href="@{/api/admin/dashboard-user}"><i
 								class="sl sl-icon-user"></i> User</a></li>
-						<li><a th:href="@{/logout-admin}"><i
+						<li><a th:href="@{/api/admin/logout-admin}"><i
 								class="sl sl-icon-power"></i> Logout</a></li>
 					</ul>
 				</div>
@@ -229,9 +229,9 @@
 											</div>
 										</div>
 										<div class="buttons-to-right">
-											<a th:href="@{/delete-order/{id}(id=${y.id})}" class="button gray reject"><i
+											<a th:href="@{/api/admin/delete-order/{id}(id=${y.id})}" class="button gray reject"><i
 												class="sl sl-icon-close"></i> Delete</a> <a
-												th:href="@{/dashboard-invoice/{id}(id=${y.id})}"
+												th:href="@{/api/admin/dashboard-invoice/{id}(id=${y.id})}"
 												class="button gray approve"><i class="im im-icon-Coin"></i>
 												View Invoice</a>
 										</div>
@@ -253,11 +253,11 @@
 											th:href="@{/dashboard-orders/{page}(page=${pageOrder.number - 1})}"><i
 												class="sl sl-icon-arrow-left"></i></a></li>
 										<li><a
-											th:href="@{/dashboard-orders/{page}(page=${pageOrder.number})}"
+											th:href="@{/api/admin/dashboard-orders/{page}(page=${pageOrder.number})}"
 											class="current-page" th:text="${pageOrder.number+1}"></a></li>
 										<li><a
 											th:if="${pageOrder.number} < ${pageOrder.totalPages - 1}"
-											th:href="@{/dashboard-orders/{page}(page=${pageOrder.number + 1})}"><i
+											th:href="@{/api/admin/dashboard-orders/{page}(page=${pageOrder.number + 1})}"><i
 												class="sl sl-icon-arrow-right"></i></a></li>
 									</ul>
 								</nav>

@@ -1,17 +1,11 @@
 package StoreApp.StoreApp.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -22,13 +16,16 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Data // lombok giúp generate các hàm constructor, get, set v.v.
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
-public class User {
+public class User  {
 	@Id()
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
@@ -62,4 +59,5 @@ public class User {
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Cart> cart;
+
 }
