@@ -78,7 +78,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/getUserById/{userId}")
+    @GetMapping("/getUserById")
     public ResponseEntity<User> getUserById(String userId) {
         try {
             User user = userService.GetUserById(userId);
