@@ -69,7 +69,7 @@ public class UserController {
                 jwtTokenService.saveToken(id, token);
 
                 // Set response
-                AuthResponseDTO response = new AuthResponseDTO(id, token);
+                AuthResponseDTO response = new AuthResponseDTO(token);
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -78,9 +78,10 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/getUserById")
-    public ResponseEntity<User> getUserById(String userId) {
+    @GetMapping("/getUser")
+    public ResponseEntity<User> getUserById(@RequestParam("token") String token) {
         try {
+            String userId = jwtTokenUtils.extractUserId(token);
             User user = userService.GetUserById(userId);
 
             if (user != null) {
@@ -127,9 +128,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/forgotnewpass", consumes = "application/x-www-form-urlencoded")
-    public ResponseEntity<String> ForgotNewPass(String id, String code, String password) {
-//		String codeSession = (String) session.getAttribute("code");
-//		System.out.println("session: "+ codeSession);
+    public ResponseEntity<String> ForgotNewPass(String id, String password) {
         User user = userService.findByIdAndRole(id, "user");
         if (user != null) {
             String encodedValue = bCryptPasswordEncoder.encode(password);
@@ -151,6 +150,23 @@ public class UserController {
         } else
             return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @PostMapping(path = "/checkoldpassword", consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<Boolean> CheckOldPassword(String id, String oldPassword) {
+        User user = userService.findByIdAndRole(id, "user");
+
+        if (user != null) {
+            // Kiểm tra xem mật khẩu cũ nhập từ ứng dụng có khớp với mật khẩu lưu trữ trên server không
+            boolean isOldPasswordCorrect = bCryptPasswordEncoder.matches(oldPassword, user.getPassword());
+
+            // Trả về kết quả
+            return new ResponseEntity<>(isOldPasswordCorrect, HttpStatus.OK);
+        } else {
+            // Trường hợp không tìm thấy người dùng
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @PostMapping(path = "/update", consumes = "multipart/form-data")
     public ResponseEntity<User> UpdateAvatar(String id, MultipartFile avatar, String fullname, String email,

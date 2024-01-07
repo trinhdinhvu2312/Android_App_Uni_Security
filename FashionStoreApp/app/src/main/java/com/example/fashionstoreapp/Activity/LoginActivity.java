@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.fashionstoreapp.Model.Address;
+import com.example.fashionstoreapp.Model.LoginResponse;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.UserAPI;
@@ -156,55 +157,55 @@ public class LoginActivity extends AppCompatActivity {
     private void Login() {
         etPassword = findViewById(R.id.etPassword);
         etUserName = findViewById(R.id.etUserName);
-        if (TextUtils.isEmpty(etUserName.getText().toString())){
+
+        if (TextUtils.isEmpty(etUserName.getText().toString())) {
             etUserName.setError("Please enter your username");
             etUserName.requestFocus();
             return;
         }
 
-        if (TextUtils.isEmpty(etPassword.getText().toString())){
+        if (TextUtils.isEmpty(etPassword.getText().toString())) {
             etPassword.setError("Please enter your password");
             etPassword.requestFocus();
             return;
         }
+
         String username = etUserName.getText().toString();
         String password = etPassword.getText().toString();
-//        Log.e("ffff", "1======"+username);
-//        Log.e("ffff", "2======"+password);
-        UserAPI.userApi.Login(username,password).enqueue(new retrofit2.Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-//                        User user = new User();
-//                        user.setUser_Name("dmm");
-                user = response.body();
-                if (user!=null){
-                    Toast.makeText(LoginActivity.this,"Đăng nhập thành công", Toast.LENGTH_LONG).show();
-//                    Log.e("ffff", user.toString());
-                    ObjectSharedPreferences.saveObjectToSharedPreference(LoginActivity.this, "User", "MODE_PRIVATE", user);
-                    if(user.getAddress()!=null && user.getPhone_Number()!=null){
-                        Address address = new Address(user.getUser_Name(), user.getPhone_Number(), user.getAddress());
-                        ObjectSharedPreferences.saveObjectToSharedPreference(LoginActivity.this, "address", "MODE_PRIVATE", address);
-                    }
 
-                    Intent intent= new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("object", user);
-                    startActivity(intent);
-                    finish();
+        UserAPI.userApi.login(username, password).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful()) {
+                    LoginResponse loginResponse = response.body();
+                    if (loginResponse != null) {
+                        String token = loginResponse.getToken();
+
+                        // Save the token to SharedPreferences
+                        ObjectSharedPreferences.saveStringToSharedPreference(LoginActivity.this, "Token", "MODE_PRIVATE", token);
+
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Incorrect Username or Password", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(LoginActivity.this, "Failed to connect, try again later", Toast.LENGTH_LONG).show();
+                    Log.e("TAG", "API Login failed");
                 }
-                else{
-                    Toast.makeText(LoginActivity.this,"Incorrect UserName or Password", Toast.LENGTH_LONG).show();
-                }
-                Log.e("ffff", "Đăng nhập thành công");
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this,"Failed to connect, try again later", Toast.LENGTH_LONG).show();
-                Log.e("ffff", "Kết nối API Login thất bại");
-                Log.e("TAG", t.toString());
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Failed to connect, try again later", Toast.LENGTH_LONG).show();
+                Log.e("TAG", "API Login failed", t);
             }
         });
     }
+
 
     private void anhXa() {
         btnLogin = findViewById(R.id.btnSignUp);

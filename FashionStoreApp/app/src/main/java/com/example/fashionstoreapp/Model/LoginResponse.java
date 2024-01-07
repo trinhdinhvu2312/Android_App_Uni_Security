@@ -1,15 +1,12 @@
-package StoreApp.StoreApp.model;
+package com.example.fashionstoreapp.Model;
 
-import lombok.Data;
-
-@Data
-public class AuthResponseDTO {
+public class LoginResponse {
     private String token;
 
-    public AuthResponseDTO() {
+    public LoginResponse() {
     }
 
-    public AuthResponseDTO(String token) {
+    public LoginResponse(String token) {
         this.token = token;
     }
 

@@ -14,6 +14,6 @@ import retrofit2.http.POST;
 public interface CategoryAPI {
     RetrofitService retrofitService = new RetrofitService();
     CategoryAPI categoryAPI = retrofitService.getRetrofit().create(CategoryAPI.class);
-    @GET("/category")
+    @GET("category")
     Call<List<Category>> GetAllCategories();
 }

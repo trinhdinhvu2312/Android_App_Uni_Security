@@ -28,7 +28,7 @@ public class RetrofitService {
     private void initializeRetrofit() {
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://"+IPAddress+":8080").addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl("http://"+IPAddress+":8080/api/").addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 

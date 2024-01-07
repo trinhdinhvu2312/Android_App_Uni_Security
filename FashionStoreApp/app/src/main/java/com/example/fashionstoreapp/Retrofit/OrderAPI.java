@@ -16,13 +16,13 @@ public interface OrderAPI {
     OrderAPI orderAPI = retrofitService.getRetrofit().create(OrderAPI.class);
 
     @FormUrlEncoded
-    @POST("/placeorder")
+    @POST("placeorder")
     Call<Order> placeOrder(@Field("user_id") String user_id, @Field("fullname") String fullname,
                            @Field("phoneNumber") String phoneNumber, @Field("address") String address, @Field("paymentMethod") String paymentMethod);
 
-    @GET("/order")
+    @GET("order")
     Call<List<Order>> getOrderByUserId(@Query("user_id") String user_id);
 
-    @GET("/ordermethod")
+    @GET("ordermethod")
     Call<List<Order>> getOrderByUserIdAndPaymentMethod(@Query("user_id") String user_id, @Query("method") String method);
 }

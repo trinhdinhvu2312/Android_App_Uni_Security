@@ -23,4 +23,16 @@ public class ObjectSharedPreferences {
         }
         return null;
     }
+
+    public static void saveStringToSharedPreference(Context context, String preferenceFileName, String key, String value) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceFileName, 0);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putString(key, value);
+        sharedPreferencesEditor.apply();
+    }
+
+    public static String getStringFromPreference(Context context, String preferenceFileName, String key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceFileName, 0);
+        return sharedPreferences.getString(key, null);
+    }
 }

@@ -15,13 +15,13 @@ public interface ProductAPI {
 
     RetrofitService retrofitService = new RetrofitService();
     ProductAPI productApi = retrofitService.getRetrofit().create(ProductAPI.class);
-    @GET("/newproduct")
+    @GET("newproduct")
     Call<List<Product>> getNewProduct();
 
     @GET("bestsellers")
     Call<List<Product>> getBestSellers();
 //    @FormUrlEncoded
-    @GET("/search")
+    @GET("search")
     Call<List<Product>> search(@Query("searchContent") String searchContent);
 
 }

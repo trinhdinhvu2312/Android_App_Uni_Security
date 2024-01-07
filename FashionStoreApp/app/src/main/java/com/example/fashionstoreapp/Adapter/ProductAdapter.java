@@ -36,6 +36,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     List<Product> Products;
 
     Context context;
+
     public ProductAdapter(List<Product> products, Context context) {
         this.Products = products;
         this.context = context;
@@ -58,37 +59,42 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.fee.setText(en.format(Products.get(position).getPrice()));
 
         Glide.with(holder.itemView.getContext())
-                .load(Products.get(position).getProductImage().get(0).getUrl_Image())
+                .load(product.getProductImage().get(0).getUrl_Image())
                 .into(holder.pic);
 
         holder.addBtn.setOnClickListener(v -> {
             User user = ObjectSharedPreferences.getSavedObjectFromPreference(context, "User", "MODE_PRIVATE", User.class);
-            CartAPI.cartAPI.addToCart(user.getId(), product.getId(), 1).enqueue(new Callback<Cart>() {
-                @Override
-                public void onResponse(Call<Cart> call, Response<Cart> response) {
-                    Cart cart = response.body();
-                    if(cart !=null){
-                        Toast.makeText(context.getApplicationContext(), "Thêm vào giỏ thành công", Toast.LENGTH_SHORT).show();
+            if (user != null) {
+                CartAPI.cartAPI.addToCart(user.getId(), product.getId(), 1).enqueue(new Callback<Cart>() {
+                    @Override
+                    public void onResponse(Call<Cart> call, Response<Cart> response) {
+                        Cart cart = response.body();
+                        if (cart != null) {
+                            Toast.makeText(context.getApplicationContext(), "Thêm vào giỏ thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context.getApplicationContext(), "Thêm vào giỏ thất bại", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else {
-                        Toast.makeText(context.getApplicationContext(), "Thêm vào giỏ thất bại", Toast.LENGTH_SHORT).show();
 
+                    @Override
+                    public void onFailure(Call<Cart> call, Throwable t) {
+                        Toast.makeText(context.getApplicationContext(), "Call API Add to cart fail", Toast.LENGTH_SHORT).show();
                     }
-                }
-
-                @Override
-                public void onFailure(Call<Cart> call, Throwable t) {
-                    Toast.makeText(context.getApplicationContext(), "Call API Add to cart fail", Toast.LENGTH_SHORT).show();
-                }
-            });
+                });
+            } else {
+                // Handle the case where user is null
+                Toast.makeText(context.getApplicationContext(), "User information is not available", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        holder.itemView.setOnClickListener(v ->{
-            Intent intent = new Intent(holder.itemView.getContext(), ShowDetailActivity.class);
-            intent.putExtra("product", product);
-            holder.itemView.getContext().startActivity(intent);
-        });
-    }
+        holder.itemView.setOnClickListener(v ->
+
+    {
+        Intent intent = new Intent(holder.itemView.getContext(), ShowDetailActivity.class);
+        intent.putExtra("product", product);
+        holder.itemView.getContext().startActivity(intent);
+    });
+}
 
 
     @Override
@@ -96,17 +102,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return Products.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, fee;
-        ImageView pic;
-        ImageView addBtn;
+public class ViewHolder extends RecyclerView.ViewHolder {
+    TextView title, fee;
+    ImageView pic;
+    ImageView addBtn;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.title);
-            pic = itemView.findViewById(R.id.ivImage);
-            fee = itemView.findViewById(R.id.fee);
-            addBtn = itemView.findViewById(R.id.addBtn);
-        }
+    public ViewHolder(@NonNull View itemView) {
+        super(itemView);
+        title = itemView.findViewById(R.id.title);
+        pic = itemView.findViewById(R.id.ivImage);
+        fee = itemView.findViewById(R.id.fee);
+        addBtn = itemView.findViewById(R.id.addBtn);
     }
+}
 }

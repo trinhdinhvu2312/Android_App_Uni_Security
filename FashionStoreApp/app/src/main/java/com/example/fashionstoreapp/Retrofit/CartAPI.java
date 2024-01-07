@@ -19,15 +19,15 @@ public interface CartAPI {
     CartAPI cartAPI = retrofitService.getRetrofit().create(CartAPI.class);
 
     @FormUrlEncoded
-    @POST("/addtocart")
+    @POST("addtocart")
     Call<Cart> addToCart(@Field("user_id") String user_id, @Field("product_id") int product_id, @Field("count") int count);
 
 
-    @GET("/cartofuser")
+    @GET("cartofuser")
     Call<List<Cart>> cartOfUser(@Query("id") String userId);
 
     @FormUrlEncoded
-    @POST("/deletecart")
+    @POST("deletecart")
     Call<String> deleteCart(@Field("cart_id") int cart_id, @Field("user_id") String user_id);
 
 }

@@ -23,6 +23,7 @@ import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.CategoryAPI;
 import com.example.fashionstoreapp.Retrofit.ProductAPI;
+import com.example.fashionstoreapp.Retrofit.UserAPI;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AnhXa();
         appBarClick();
-        LoadUserInfor();
+        LoadUserInfo();
         LoadCategories();
         LoadNewProducts();
         LoadBestSellers();
@@ -181,11 +182,45 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void LoadUserInfor() {
-        user = ObjectSharedPreferences.getSavedObjectFromPreference(MainActivity.this, "User", "MODE_PRIVATE", User.class);
-        tvHiName.setText("Hi "+ user.getUser_Name());
-        Glide.with(getApplicationContext()).load(user.getAvatar()).into(ivAvatar);
+    private void LoadUserInfo() {
+        // Get the token from SharedPreferences
+        String token = ObjectSharedPreferences.getStringFromPreference(MainActivity.this, "Token", "MODE_PRIVATE");
+
+        // Check if the token is not empty
+        if (token != null && !token.isEmpty()) {
+            // Call the API to get user information
+            UserAPI.userApi.getUser(token).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        user = response.body();
+                        // Save the user information to SharedPreferences for future use if needed
+                        ObjectSharedPreferences.saveObjectToSharedPreference(MainActivity.this, "User", "MODE_PRIVATE", user);
+
+                        // Update UI with user information
+                        tvHiName.setText("Hi " + user.getUser_Name());
+                        Glide.with(getApplicationContext()).load(user.getAvatar()).into(ivAvatar);
+                    } else {
+                        // Handle API error response
+                        // You may want to show an error message or take appropriate action
+                        Log.e("TAG", "API getUser failed");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    // Handle API call failure
+                    // You may want to show an error message or take appropriate action
+                    Log.e("TAG", "API getUser failed", t);
+                }
+            });
+        } else {
+            // Handle the case where the token is empty or null
+            // You may want to show an error message or take appropriate action
+            Log.e("TAG", "Token is empty or null");
+        }
     }
+
 
     private void AnhXa() {
         tvHiName = findViewById(R.id.tvHiName);
