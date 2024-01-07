@@ -1,5 +1,6 @@
 package StoreApp.StoreApp.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import StoreApp.StoreApp.model.AuthResponseDTO;
@@ -46,12 +47,18 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private MyUserDetailService myUserDetailService;
+
     @Autowired
     private JwtTokenService jwtTokenService;
+
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @PostMapping(path = "/login", consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<AuthResponseDTO> Login(String id, String password) {
@@ -127,30 +134,6 @@ public class UserController {
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(path = "/forgotnewpass", consumes = "application/x-www-form-urlencoded")
-    public ResponseEntity<String> ForgotNewPass(String id, String password) {
-        User user = userService.findByIdAndRole(id, "user");
-        if (user != null) {
-            String encodedValue = bCryptPasswordEncoder.encode(password);
-            user.setPassword(encodedValue);
-            userService.saveUser(user);
-            return new ResponseEntity<String>(password, HttpStatus.OK);
-        } else
-            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
-    }
-
-    @PostMapping(path = "/changepassword", consumes = "application/x-www-form-urlencoded")
-    public ResponseEntity<String> ChangePassword(String id, String password) {
-        User user = userService.findByIdAndRole(id, "user");
-        if (user != null) {
-            String encodedValue = bCryptPasswordEncoder.encode(password);
-            user.setPassword(encodedValue);
-            userService.saveUser(user);
-            return new ResponseEntity<String>(password, HttpStatus.OK);
-        } else
-            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
-    }
-
     @PostMapping(path = "/checkoldpassword", consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<Boolean> CheckOldPassword(String id, String oldPassword) {
         User user = userService.findByIdAndRole(id, "user");
@@ -167,6 +150,45 @@ public class UserController {
         }
     }
 
+    @PostMapping(path = "/forgotnewpass", consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<String> forgotNewPass(
+            String id,
+            String code,
+            String password
+    ) {
+        User user = userService.findByIdAndRole(id, "user");
+        if (user != null) {
+            // Kiểm tra mã code
+            HttpSession session = httpServletRequest.getSession();
+            Object storedCode = session.getAttribute("code");
+            if (storedCode != null && storedCode.toString().equals(code)) {
+                // Mã code đúng, tiến hành đặt lại mật khẩu
+                String encodedValue = bCryptPasswordEncoder.encode(password);
+                user.setPassword(encodedValue);
+                userService.saveUser(user);
+                return new ResponseEntity<>(password, HttpStatus.OK);
+            } else {
+                // Mã code không đúng hoặc đã hết hạn
+                return new ResponseEntity<>("Invalid or expired verification code", HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            // Người dùng không tồn tại
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PostMapping(path = "/changepassword", consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<String> ChangePassword(String id, String password) {
+        User user = userService.findByIdAndRole(id, "user");
+        if (user != null) {
+            String encodedValue = bCryptPasswordEncoder.encode(password);
+            user.setPassword(encodedValue);
+            userService.saveUser(user);
+            return new ResponseEntity<String>(password, HttpStatus.OK);
+        } else
+            return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+    }
 
     @PostMapping(path = "/update", consumes = "multipart/form-data")
     public ResponseEntity<User> UpdateAvatar(String id, MultipartFile avatar, String fullname, String email,
