@@ -13,11 +13,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface CartAPI {
-
-
-    RetrofitService retrofitService = new RetrofitService();
-    CartAPI cartAPI = retrofitService.getRetrofit().create(CartAPI.class);
-
     @FormUrlEncoded
     @POST("addtocart")
     Call<Cart> addToCart(@Field("user_id") String user_id, @Field("product_id") int product_id, @Field("count") int count);

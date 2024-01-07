@@ -19,10 +19,6 @@ public interface UserAPI {
 
     RetrofitService retrofitService = new RetrofitService();
     UserAPI userApi = retrofitService.getRetrofit().create(UserAPI.class);
-
-
-    //    @Headers("Accept: application/json; charset=utf-8")
-
     @POST("login")
     @FormUrlEncoded
     Call<LoginResponse> login(@Field("id") String id, @Field("password") String password);

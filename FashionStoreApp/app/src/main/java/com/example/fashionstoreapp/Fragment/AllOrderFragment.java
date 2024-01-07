@@ -19,6 +19,7 @@ import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.OrderAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.OrderAPIImpl;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class AllOrderFragment extends Fragment {
     public AllOrderFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +57,8 @@ public class AllOrderFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
         rvAllOrder.setLayoutManager(linearLayoutManager);
         User user = ObjectSharedPreferences.getSavedObjectFromPreference(getContext(), "User", "MODE_PRIVATE", User.class);
-        OrderAPI.orderAPI.getOrderByUserId(user.getId()).enqueue(new Callback<List<Order>>() {
+        OrderAPIImpl orderAPIImpl = new OrderAPIImpl(getContext());
+        orderAPIImpl.getOrderByUserId(user.getId()).enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
 //                Log.e("=====", response.body().toString());

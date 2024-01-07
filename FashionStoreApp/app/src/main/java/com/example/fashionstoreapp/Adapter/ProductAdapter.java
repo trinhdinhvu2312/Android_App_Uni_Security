@@ -22,6 +22,7 @@ import com.example.fashionstoreapp.Model.Product;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.CartAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.CartAPIImpl;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.text.NumberFormat;
@@ -65,7 +66,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.addBtn.setOnClickListener(v -> {
             User user = ObjectSharedPreferences.getSavedObjectFromPreference(context, "User", "MODE_PRIVATE", User.class);
             if (user != null) {
-                CartAPI.cartAPI.addToCart(user.getId(), product.getId(), 1).enqueue(new Callback<Cart>() {
+                CartAPIImpl cartAPIImpl = new CartAPIImpl(context);
+                cartAPIImpl.addToCart(user.getId(), product.getId(), 1).enqueue(new Callback<Cart>() {
                     @Override
                     public void onResponse(Call<Cart> call, Response<Cart> response) {
                         Cart cart = response.body();

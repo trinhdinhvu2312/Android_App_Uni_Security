@@ -18,6 +18,7 @@ import com.example.fashionstoreapp.Model.Category;
 import com.example.fashionstoreapp.Model.Product;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.ProductAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.ProductAPIImpl;
 
 import java.util.List;
 
@@ -88,7 +89,8 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     private void loadProductSearch() {
-        ProductAPI.productApi.search(etSearch.getText().toString()).enqueue(new Callback<List<Product>>() {
+        ProductAPIImpl productAPIImpl = new ProductAPIImpl(this);
+        productAPIImpl.search(etSearch.getText().toString()).enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 List<Product> newProductsList = response.body();

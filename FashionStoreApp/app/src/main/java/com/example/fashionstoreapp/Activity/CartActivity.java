@@ -19,6 +19,7 @@ import com.example.fashionstoreapp.Model.Cart;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.CartAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.CartAPIImpl;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.text.NumberFormat;
@@ -85,7 +86,8 @@ public class CartActivity extends AppCompatActivity implements CartItemInterface
         User user = ObjectSharedPreferences.getSavedObjectFromPreference(CartActivity.this, "User", "MODE_PRIVATE", User.class);
         CartItemInterface cartItemInterface = this;
         //GET API
-        CartAPI.cartAPI.cartOfUser(user.getId()).enqueue(new Callback<List<Cart>>() {
+        CartAPIImpl cartAPIImpl = new CartAPIImpl(CartActivity.this);
+        cartAPIImpl.cartOfUser(user.getId()).enqueue(new Callback<List<Cart>>() {
             @Override
             public void onResponse(Call<List<Cart>> call, Response<List<Cart>> response) {
                 listCart = response.body();

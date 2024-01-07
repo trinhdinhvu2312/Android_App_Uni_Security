@@ -33,8 +33,11 @@ public class SecurityConfig{
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/**",
-                        "/api/auth/**",
+                .antMatchers("/api/login",
+                        "/api/signup",
+                        "/api/getUser",
+                        "/api/forgotnewpass",
+                        "/api/google",
                         "/api/admin/**",
                         "/admin/**",
                         "/img/**",

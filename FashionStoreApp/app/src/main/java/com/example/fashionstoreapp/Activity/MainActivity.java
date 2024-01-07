@@ -24,6 +24,8 @@ import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.CategoryAPI;
 import com.example.fashionstoreapp.Retrofit.APIService.ProductAPI;
 import com.example.fashionstoreapp.Retrofit.APIService.UserAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.CategoryAPIImpl;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.ProductAPIImpl;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.util.List;
@@ -121,9 +123,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
         recyclerViewBestSellersList = findViewById(R.id.view3);
         recyclerViewBestSellersList.setLayoutManager(linearLayoutManager);
+        ProductAPIImpl productAPIImpl = new ProductAPIImpl(this);
 
         //GET API
-        ProductAPI.productApi.getBestSellers().enqueue(new Callback<List<Product>>() {
+        productAPIImpl.getBestSellers().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 List<Product> newProductsList = response.body();
@@ -142,9 +145,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
         recyclerViewNewProductList = findViewById(R.id.view2);
         recyclerViewNewProductList.setLayoutManager(linearLayoutManager);
+        ProductAPIImpl productAPIImpl = new ProductAPIImpl(this);
 
         //GET API
-        ProductAPI.productApi.getNewProduct().enqueue(new Callback<List<Product>>() {
+        productAPIImpl.getNewProduct().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 List<Product> newProductsList = response.body();
@@ -164,8 +168,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewCategoryList = findViewById(R.id.view1);
         recyclerViewCategoryList.setLayoutManager(linearLayoutManager);
+        CategoryAPIImpl categoryAPIImpl = new CategoryAPIImpl(this);
         //Get API
-        CategoryAPI.categoryAPI.GetAllCategories().enqueue(new Callback<List<Category>>() {
+        categoryAPIImpl.GetAllCategories().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 Log.d( "TAGa", "onResponse: " + response.body());

@@ -16,6 +16,7 @@ import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.OrderAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.OrderAPIImpl;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.google.android.material.tabs.TabLayout;
 
@@ -73,7 +74,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private void CheckEmpty() {
         User user = ObjectSharedPreferences.getSavedObjectFromPreference(OrderActivity.this, "User", "MODE_PRIVATE", User.class);
-        OrderAPI.orderAPI.getOrderByUserId(user.getId()).enqueue(new Callback<List<Order>>() {
+        OrderAPIImpl orderAPIImpl = new OrderAPIImpl(this);
+        orderAPIImpl.getOrderByUserId(user.getId()).enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if(response.body().isEmpty()){

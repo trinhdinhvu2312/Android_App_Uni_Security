@@ -22,6 +22,7 @@ import com.example.fashionstoreapp.Model.Cart;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.CartAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.CartAPIImpl;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.text.NumberFormat;
@@ -73,7 +74,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 int price = parseInt(holder.tvTotalPrice.getText().toString().replace(",","")) * (-1);
-                CartAPI.cartAPI.deleteCart(cart.getId(), user.getId()).enqueue(new Callback<String>() {
+                CartAPIImpl cartAPIImpl = new CartAPIImpl(context);
+                cartAPIImpl.deleteCart(cart.getId(), user.getId()).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()){
@@ -101,7 +103,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         holder.ivPlus.setOnClickListener(v -> {
             if (cart.getCount()<cart.getProduct().getQuantity()){
                 cart.setCount(cart.getCount()+1);
-                CartAPI.cartAPI.addToCart(user.getId(), cart.getProduct().getId(), 1).enqueue(new Callback<Cart>() {
+                CartAPIImpl cartAPIImpl = new CartAPIImpl(context);
+                cartAPIImpl.addToCart(user.getId(), cart.getProduct().getId(), 1).enqueue(new Callback<Cart>() {
                     @Override
                     public void onResponse(Call<Cart> call, Response<Cart> response) {
                         int price = cart.getProduct().getPrice();
@@ -120,7 +123,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         holder.ivMinus.setOnClickListener(v -> {
             if (cart.getCount()>1){
                 cart.setCount(cart.getCount()-1);
-                CartAPI.cartAPI.addToCart(user.getId(), cart.getProduct().getId(), -1).enqueue(new Callback<Cart>() {
+                CartAPIImpl cartAPIImpl = new CartAPIImpl(context);
+                cartAPIImpl.addToCart(user.getId(), cart.getProduct().getId(), -1).enqueue(new Callback<Cart>() {
                     @Override
                     public void onResponse(Call<Cart> call, Response<Cart> response) {
                         int price = cart.getProduct().getPrice();

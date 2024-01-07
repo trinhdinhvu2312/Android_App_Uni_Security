@@ -28,6 +28,8 @@ import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.CartAPI;
 import com.example.fashionstoreapp.Retrofit.APIService.OrderAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.CartAPIImpl;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.OrderAPIImpl;
 import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.example.fashionstoreapp.Zalo.Api.CreateOrder;
@@ -159,8 +161,8 @@ public class CheckOutActivity extends AppCompatActivity {
             String phoneNumber1 = tvPhoneNumber.getText().toString();
             String encryptPhone = AESEncryption.encrypt(phoneNumber1, address.getAddress() );
             //String phone2 = encryptPhone.setText("("+encryptPhone+")");
-
-            OrderAPI.orderAPI.placeOrder(user.getId(), tvUserName.getText().toString(), encryptPhone.replace("(", "").replace(")", ""), tvAddress.getText().toString(), method).enqueue(new Callback<Order>() {
+            OrderAPIImpl orderAPIImpl = new OrderAPIImpl(this);
+            orderAPIImpl.placeOrder(user.getId(), tvUserName.getText().toString(), encryptPhone.replace("(", "").replace(")", ""), tvAddress.getText().toString(), method).enqueue(new Callback<Order>() {
                 @Override
                 public void onResponse(Call<Order> call, Response<Order> response) {
                     Order order = response.body();
@@ -209,7 +211,8 @@ public class CheckOutActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.view);
         recyclerView.setLayoutManager(linearLayoutManager);
         User user = ObjectSharedPreferences.getSavedObjectFromPreference(CheckOutActivity.this, "User", "MODE_PRIVATE", User.class);
-        CartAPI.cartAPI.cartOfUser(user.getId()).enqueue(new Callback<List<Cart>>() {
+        CartAPIImpl cartAPIImpl = new CartAPIImpl(CheckOutActivity.this);
+        cartAPIImpl.cartOfUser(user.getId()).enqueue(new Callback<List<Cart>>() {
             @Override
             public void onResponse(Call<List<Cart>> call, Response<List<Cart>> response) {
                 List<Cart> listCart = response.body();

@@ -18,6 +18,7 @@ import com.example.fashionstoreapp.Model.Product;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
 import com.example.fashionstoreapp.Retrofit.APIService.CartAPI;
+import com.example.fashionstoreapp.Retrofit.APIServiceImpl.CartAPIImpl;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -61,7 +62,8 @@ public class ShowDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 User user = ObjectSharedPreferences.getSavedObjectFromPreference(ShowDetailActivity.this, "User", "MODE_PRIVATE", User.class);
                 int count = parseInt(tvNumber.getText().toString());
-                CartAPI.cartAPI.addToCart(user.getId(), product.getId(), count).enqueue(new Callback<Cart>() {
+                CartAPIImpl cartAPIImpl = new CartAPIImpl(ShowDetailActivity.this);
+                cartAPIImpl.addToCart(user.getId(), product.getId(), count).enqueue(new Callback<Cart>() {
                     @Override
                     public void onResponse(Call<Cart> call, Response<Cart> response) {
                         Cart cart = response.body();

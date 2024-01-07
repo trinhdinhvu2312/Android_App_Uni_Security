@@ -13,9 +13,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface OrderAPI {
-    RetrofitService retrofitService = new RetrofitService();
-    OrderAPI orderAPI = retrofitService.getRetrofit().create(OrderAPI.class);
-
     @FormUrlEncoded
     @POST("placeorder")
     Call<Order> placeOrder(@Field("user_id") String user_id, @Field("fullname") String fullname,
