@@ -16,7 +16,7 @@ import com.example.fashionstoreapp.Adapter.OrderAdapter;
 import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.OrderAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.OrderAPI;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.util.List;

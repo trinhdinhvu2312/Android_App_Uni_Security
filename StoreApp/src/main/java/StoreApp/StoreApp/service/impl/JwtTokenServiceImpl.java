@@ -63,7 +63,16 @@ public class JwtTokenServiceImpl implements JwtTokenService {
         return tokenRepository.findAllByUser_Id(userId);
     }
 
+    @Override
+    public Token findTokensByToken(String token) {
+        return tokenRepository.findTokenByToken(token).orElseThrow();
+    }
+
+    @Override
+    public void deleteTokenByUserId(String userId) {
+        tokenRepository.deleteTokenByUser_Id(userId);
+    }
+
     // END OF CREATE JWT TOKEN METHOD.
 }
 // END OF JWT TOKEN GENERATOR / SERVICE.
-

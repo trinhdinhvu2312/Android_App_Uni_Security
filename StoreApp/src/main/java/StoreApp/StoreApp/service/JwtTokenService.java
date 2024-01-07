@@ -17,4 +17,8 @@ public interface JwtTokenService {
     void saveToken(String userId, String token);
 
     List<Token> findAllByUser_Id(String userId);
+
+    Token findTokensByToken(String token);
+
+    void deleteTokenByUserId(String userId);
 }

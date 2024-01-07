@@ -2,7 +2,6 @@ package com.example.fashionstoreapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -16,7 +15,7 @@ import com.example.fashionstoreapp.Adapter.OrderFragmentAdapter;
 import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.OrderAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.OrderAPI;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.google.android.material.tabs.TabLayout;
 

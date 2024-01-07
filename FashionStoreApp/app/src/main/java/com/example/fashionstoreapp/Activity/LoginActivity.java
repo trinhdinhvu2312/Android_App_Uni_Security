@@ -1,6 +1,5 @@
 package com.example.fashionstoreapp.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,7 +18,8 @@ import com.example.fashionstoreapp.Model.Address;
 import com.example.fashionstoreapp.Model.LoginResponse;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.UserAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.UserAPI;
+import com.example.fashionstoreapp.Somethings.JwtTokenManager;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     User user = new User();
     ProgressBar progressBar;
     ConstraintLayout clGoogle;
-
+    private JwtTokenManager tokenManager;
     GoogleSignInOptions googleSignInOptions;
     GoogleSignInClient googleSignInClient;
 
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         tvForgotPasswordClick();
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
+        tokenManager = new JwtTokenManager(this);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if(acct!=null){
             navigateToSecondActivity();
@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
                         String token = loginResponse.getToken();
-
+                        tokenManager.saveToken(token);
                         // Save the token to SharedPreferences
                         ObjectSharedPreferences.saveStringToSharedPreference(LoginActivity.this, "Token", "MODE_PRIVATE", token);
 

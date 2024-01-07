@@ -21,9 +21,9 @@ import com.example.fashionstoreapp.Model.Category;
 import com.example.fashionstoreapp.Model.Product;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.CategoryAPI;
-import com.example.fashionstoreapp.Retrofit.ProductAPI;
-import com.example.fashionstoreapp.Retrofit.UserAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.CategoryAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.ProductAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.UserAPI;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.util.List;

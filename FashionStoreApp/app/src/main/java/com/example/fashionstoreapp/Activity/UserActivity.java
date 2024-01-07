@@ -1,7 +1,5 @@
 package com.example.fashionstoreapp.Activity;
 
-import static com.example.fashionstoreapp.Somethings.AESEncryption.decrypt;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.UserAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.UserAPI;
 import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.example.fashionstoreapp.Somethings.PhoneNumberUtils;

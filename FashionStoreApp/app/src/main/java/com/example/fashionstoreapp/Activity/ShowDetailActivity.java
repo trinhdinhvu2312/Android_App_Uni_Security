@@ -17,7 +17,7 @@ import com.example.fashionstoreapp.Model.Cart;
 import com.example.fashionstoreapp.Model.Product;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.CartAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.CartAPI;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;

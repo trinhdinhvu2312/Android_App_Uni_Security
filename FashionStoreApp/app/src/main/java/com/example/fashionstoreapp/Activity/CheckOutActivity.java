@@ -26,11 +26,10 @@ import com.example.fashionstoreapp.Model.Cart;
 import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.CartAPI;
-import com.example.fashionstoreapp.Retrofit.OrderAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.CartAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.OrderAPI;
 import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
-import com.example.fashionstoreapp.Somethings.PhoneNumberUtils;
 import com.example.fashionstoreapp.Zalo.Api.CreateOrder;
 
 import org.json.JSONObject;

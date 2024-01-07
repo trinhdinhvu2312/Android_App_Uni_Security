@@ -1,15 +1,10 @@
 package com.example.fashionstoreapp.Model;
 
 
-import com.example.fashionstoreapp.Retrofit.ProductAPI;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Cart implements Serializable {
 	@SerializedName("id")

@@ -10,19 +10,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.fashionstoreapp.Activity.CartActivity;
-import com.example.fashionstoreapp.Activity.UserActivity;
-import com.example.fashionstoreapp.Adapter.CartAdapter;
 import com.example.fashionstoreapp.Adapter.OrderAdapter;
 import com.example.fashionstoreapp.Model.Order;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.OrderAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.OrderAPI;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 
 import java.util.List;

@@ -3,6 +3,7 @@ package StoreApp.StoreApp.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import StoreApp.StoreApp.entity.Token;
 import StoreApp.StoreApp.model.AuthResponseDTO;
 import StoreApp.StoreApp.model.MyUserDetails;
 import StoreApp.StoreApp.service.JwtTokenService;
@@ -83,6 +84,30 @@ public class UserController {
             }
         } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping(path = "/refreshToken", consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<AuthResponseDTO> RefreshToken(String token) {
+        String userId = jwtTokenUtils.extractUserId(token);
+        MyUserDetails userDetails = (MyUserDetails) myUserDetailService.loadUserByUsername(userId);
+
+        Token selectedToken = jwtTokenService.findTokensByToken(token);
+
+        if(selectedToken!= null){
+            Boolean isExpried = jwtTokenUtils.isTokenExpired(selectedToken.getToken());
+            if(isExpried){
+                jwtTokenService.deleteTokenByUserId(userId);
+                String newToken = jwtTokenUtils.generateToken(userDetails);
+                jwtTokenService.saveToken(userId, newToken);
+                AuthResponseDTO response = new AuthResponseDTO(newToken);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }else {
+                AuthResponseDTO response = new AuthResponseDTO(selectedToken.getToken());
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/getUser")

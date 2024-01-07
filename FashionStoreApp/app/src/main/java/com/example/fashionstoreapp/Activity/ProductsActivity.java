@@ -17,7 +17,7 @@ import com.example.fashionstoreapp.Adapter.ProductAdapter;
 import com.example.fashionstoreapp.Model.Category;
 import com.example.fashionstoreapp.Model.Product;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.ProductAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.ProductAPI;
 
 import java.util.List;
 

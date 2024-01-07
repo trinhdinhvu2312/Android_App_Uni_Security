@@ -27,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.fashionstoreapp.Model.User;
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.UserAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.UserAPI;
 import com.example.fashionstoreapp.Somethings.AESEncryption;
 import com.example.fashionstoreapp.Somethings.ObjectSharedPreferences;
 import com.example.fashionstoreapp.Somethings.RealPathUtil;

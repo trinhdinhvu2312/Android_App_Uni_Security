@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.fashionstoreapp.R;
-import com.example.fashionstoreapp.Retrofit.UserAPI;
+import com.example.fashionstoreapp.Retrofit.APIService.UserAPI;
 import com.fraggjkee.smsconfirmationview.SmsConfirmationView;
 
 import retrofit2.Call;
