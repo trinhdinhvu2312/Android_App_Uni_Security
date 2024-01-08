@@ -88,22 +88,24 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
+                String passwordPattern = "^(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+                if (!etPassword.getText().toString().matches(passwordPattern)) {
+                    etPassword.setError("Password must contain at least 8 characters, 1 uppercase letter, and 1 special character");
+                    etPassword.requestFocus();
+                    return;
+                }
+
+                // Validate email format
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if (!etEmail.getText().toString().matches(emailPattern)) {
+                    etEmail.setError("Invalid email address");
+                    etEmail.requestFocus();
+                    return;
+                }
+
                 String username = etUserName.getText().toString();
-
-
                 String email1 = etEmail.getText().toString();
                 String email = AESEncryption.encrypt(email1,username);
-
-
-
-
-
-
-
-
-
-
-
                 String fullname = etFullName.getText().toString();
                 String password = etPassword.getText().toString();
                 String repassword = etRePassword.getText().toString();

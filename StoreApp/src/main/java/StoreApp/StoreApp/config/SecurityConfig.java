@@ -39,6 +39,7 @@ public class SecurityConfig{
                                 "/api/forgotnewpass",
                                 "/api/google",
                                 "/api/admin/**",
+                                "/api/update",
                                 "/admin/**",
                                 "/img/**",
                                 "/images/**",

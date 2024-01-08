@@ -229,8 +229,6 @@ public class UserController {
             user.setPhone_Number(phoneNumber);
             user.setAddress(address);
             userService.saveUser(user);
-//			if(user.getPassword()!=null)
-//				user.setPassword(new String(Base64.getDecoder().decode(user.getPassword())));
             return new ResponseEntity<User>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<User>(HttpStatus.NOT_ACCEPTABLE);
