@@ -3,10 +3,13 @@ package StoreApp.StoreApp.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import StoreApp.StoreApp.entity.Category;
 import StoreApp.StoreApp.utils.JwtTokenUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -67,6 +70,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
+	}
+
+	@Override
+	public Page<User> findAllPageAble(Pageable pageable) {
+		return userRepository.findAll(pageable);
 	}
 
 	@Override

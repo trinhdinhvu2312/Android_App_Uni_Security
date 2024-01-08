@@ -242,6 +242,19 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/dashboard-user")
+    public String DashboardUserView(Model model) {
+        User admin = (User) session.getAttribute("admin");
+        if (admin == null) {
+            return "redirect:/api/admin/signin-admin";
+        } else {
+            Pageable pageable = PageRequest.of(0, 5);
+            Page<User> pageUser = userService.findAllPageAble(pageable);
+            model.addAttribute("pageUser", pageUser);
+            return "dashboard-user";
+        }
+    }
+
     @GetMapping("dashboard-product/{page}")
     public String DashboardMyProductPageView(@PathVariable int page, Model model) {
         User admin = (User) session.getAttribute("admin");

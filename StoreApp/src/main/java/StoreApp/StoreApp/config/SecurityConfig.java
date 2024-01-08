@@ -29,30 +29,29 @@ public class SecurityConfig{
     private MyUserDetailService myUserDetailService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .requiresChannel(channel -> channel.anyRequest().requiresSecure())
+                .authorizeRequests(authorize -> authorize
+                        .antMatchers("/api/login",
+                                "/api/signup",
+                                "/api/getUser",
+                                "/api/forgotnewpass",
+                                "/api/google",
+                                "/api/admin/**",
+                                "/admin/**",
+                                "/img/**",
+                                "/images/**",
+                                "/listeo/**",
+                                "/css/**",
+                                "/scripts/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v2/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**").permitAll()
+                        .anyRequest().authenticated())
                 .csrf().disable()
-                .authorizeHttpRequests()
-                .antMatchers("/api/login",
-                        "/api/signup",
-                        "/api/getUser",
-                        "/api/forgotnewpass",
-                        "/api/google",
-                        "/api/admin/**",
-                        "/admin/**",
-                        "/img/**",
-                        "/images/**",
-                        "/listeo/**",
-                        "/css/**",
-                        "/scripts/**",
-                        "/swagger-ui.html",
-                        "/swagger-ui/**",
-                        "/v2/api-docs/**",
-                        "/swagger-resources/**",
-                        "/webjars/**")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

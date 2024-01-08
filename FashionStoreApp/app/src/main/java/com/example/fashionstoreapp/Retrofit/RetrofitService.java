@@ -3,7 +3,12 @@ package com.example.fashionstoreapp.Retrofit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -17,6 +22,8 @@ public class RetrofitService {
             .connectTimeout(40, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
+            .sslSocketFactory(getSSLSocketFactory(), new TrustAllCertsManager())
+            .hostnameVerifier(new TrustAllHostnameVerifier())
             .build();
     Gson gson = new GsonBuilder().setDateFormat("yyyy MM dd HH:mm:ss").setLenient().create();
     private Retrofit retrofit = null;
@@ -28,13 +35,23 @@ public class RetrofitService {
     private void initializeRetrofit() {
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://"+IPAddress+":8080/api/")
+                .baseUrl("https://"+IPAddress+":8080/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    private SSLSocketFactory getSSLSocketFactory() {
+        try {
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, new TrustManager[]{new TrustAllCertsManager()}, new SecureRandom());
+            return sslContext.getSocketFactory();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -26,8 +26,8 @@ public class StoreAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(StoreAppApplication.class, args);
 		System.out.println("-----------------------------------------------------------");
-        System.out.println("🚀 Server ready at http://localhost:8080");
-        System.out.println("🚀 Api doc ready at http://localhost:8080/swagger-ui.html ");
+        System.out.println("🚀 Server ready at https://localhost:8080");
+        System.out.println("🚀 Api doc ready at https://localhost:8080/swagger-ui.html ");
 	}
 	@Bean
 	public ModelMapper modelMapper() {

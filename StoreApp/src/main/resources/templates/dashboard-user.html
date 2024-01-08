@@ -139,7 +139,7 @@
             <div id="titlebar">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>My Products</h2>
+                        <h2>My List User</h2>
                         <!-- Breadcrumbs -->
                         <nav id="breadcrumbs">
                             <ul>
@@ -151,110 +151,75 @@
                     </div>
                 </div>
             </div>
-            <form action="/dashboard-product/search" method="Post">
-                <div class="main-search-input"
-                     style="margin-bottom: 30px; justify-content: space-between;">
-
-                    <div class="main-search-input-item" style="flex: 1">
-                        <input name="search-input" type="text"
-                               placeholder="Search Your Product" th:value="${search_input}">
-                    </div
-                        <button class="button" type="submit">Search</button>
-                    </div>
-
-
-                </div>
-            </form>
             <div class="row">
-
                 <!-- Listings -->
                 <div class="col-lg-12 col-md-12">
                     <div class="dashboard-list-box margin-top-0">
-                        <h4>User</h4>
-                        <ul>
-                            <th:block th:each="y : ${pageUser.content}">
-                                <li>
-                                    <div class="list-box-listing">
-                                        <div class="list-box-listing-img">
-                                            <a href="#"><img th:src="${y.userImage[0].url_Image}"
-                                                             alt=""></a>
-                                        </div>
-                                        <div class="list-box-listing-content">
-                                            <div class="inner">
-                                                <h3>
-                                                    <a href="#" th:text="${y.product_Name}"></a>
-                                                </h3>
-                                                <h3
-                                                        th:text="${#numbers.formatDecimal(y.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h3>
-                                                <span th:text="'Categorie: ' + ${y.category.category_Name}"></span><br>
-                                                <span th:text="'Availability: ' + ${y.quantity}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="buttons-to-right">
-                                        <a th:href="@{/dashboard-product/edit/{id}(id=${y.id})}" class="button gray"><i class="sl sl-icon-note"></i> Edit</a>
-
-                                        <a th:href="@{/dashboard-product/delete/{id}(id=${y.id})}" class="button gray"><i class="sl sl-icon-close"></i> Delete</a>
-                                    </div>
-                                </li>
-                            </th:block>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <!-- Pagination -->
-                <div class="clearfix"></div>
-                <div th:if="${search_dashboard==null}" class="row">
-                    <div class="col-md-12">
-                        <div class="pagination-container margin-top-20 margin-bottom-40">
-                            <nav class="pagination">
-                                <ul>
-                                    <li><a class="paging-item" th:if="${pageProduct.number} > 0"
-                                           th:href="@{/dashboard-product/{page}(page=${pageProduct.number - 1})}"><i
-                                            class="sl sl-icon-arrow-left"></i></a></li>
-                                    <li><a class="paging-item"
-                                           th:href="@{/dashboard-product/{page}(page=${pageProduct.number})}"
-                                           th:text="${pageProduct.number+1}"></a></li>
-                                    <li><a class="paging-item"
-                                           th:if="${pageProduct.number} < ${pageProduct.totalPages - 1}"
-                                           th:href="@{/dashboard-product/{page}(page=${pageProduct.number + 1})}"><i
-                                            class="sl sl-icon-arrow-right"></i></a></li>
-                                </ul>
-                            </nav>
+                        <div class="bg-white">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Avatar</th>
+                                    <th>Email</th>
+                                    <th>User Name</th>
+                                    <th>Password</th>
+                                    <th>Phone Number</th>
+                                    <th>Role</th>
+                                    <th>Login Type</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${pageUser.content}">
+                                    <td>
+                                        <img th:src="${user.avatar}" alt="" style="max-width: 50px;">
+                                    </td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.user_Name}"></td>
+                                    <td th:text="${user.password}"></td>
+                                    <td th:text="${user.phone_Number}"></td>
+                                    <td th:text="${user.role}"></td>
+                                    <td th:text="${user.login_Type}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- Pagination -->
+                            <div class="row justify-content-end">
+                                <div class="col-md-12">
+                                    <ul class="pagination">
+                                        <li class="page-item" th:if="${pageUser.number} > 0">
+                                            <a class="page-link"
+                                               th:href="@{/dashboard-user/{page}(page=${pageUser.number - 1})}">
+                                                <i class="sl sl-icon-arrow-left"></i>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{/dashboard-user/{page}(page=${pageUser.number})}"
+                                               th:text="${pageUser.number+1}">
+                                            </a>
+                                        </li>
+                                        <li class="page-item"
+                                            th:if="${pageUser.number} < ${pageUser.totalPages - 1}">
+                                            <a class="page-link"
+                                               th:href="@{/dashboard-user/{page}(page=${pageUser.number + 1})}">
+                                                <i class="sl sl-icon-arrow-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div th:if="${search_dashboard !=null}" class="row">
-                    <div class="col-md-12">
-                        <div class="pagination-container margin-top-20 margin-bottom-40">
-                            <nav class="pagination">
-                                <ul>
-                                    <li><a th:if="${pageProduct.number} > 0"
-                                           th:href="@{/dashboard-product/search/{page}(page=${pageProduct.number - 1})}"><i
-                                            class="sl sl-icon-arrow-left"></i></a></li>
-                                    <li><a
-                                            th:href="@{/dashboard-product/search/{page}(page=${pageProduct.number})}"
-                                            class="current-page" th:text="${pageProduct.number+1}"></a></li>
-                                    <li><a
-                                            th:if="${pageProduct.number} < ${pageProduct.totalPages - 1}"
-                                            th:href="@{/dashboard-product/search/{page}(page=${pageProduct.number + 1})}"><i
-                                            class="sl sl-icon-arrow-right"></i></a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pagination / End -->
             </div>
-
         </div>
-
-
     </div>
-    <!-- Dashboard / End -->
+</div>
+
+<!-- Dashboard / End -->
 
 
+</div>
 </div>
 <!-- Wrapper / End -->
 
